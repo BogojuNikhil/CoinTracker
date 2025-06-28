@@ -51,7 +51,7 @@ function Header() {
                 },
               }}
             >
-              CoinTracker
+              TracknCoin
             </Typography>
 
             <Select

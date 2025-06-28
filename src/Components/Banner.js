@@ -36,7 +36,7 @@ function Banner() {
               fontFamily: "Montserrat",
             }}
           >
-           CoinTracker
+           TracknCoin
           </Typography>
           <Typography
             variant="subtitle2"
