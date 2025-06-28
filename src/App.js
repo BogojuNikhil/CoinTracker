@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import Homepage from "./Pages/HomePage";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CoinPage from "./Pages/CoinPage";
+import Header from "./Components/Header";
+import { Box } from "@mui/material";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const cursor = document.getElementById("gold-cursor");
+
+    const moveCursor = (e) => {
+      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+    };
+
+    const handleClick = () => {
+      cursor.classList.add("clicking");
+      setTimeout(() => cursor.classList.remove("clicking"), 150);
+    };
+
+    document.addEventListener("mousemove", moveCursor);
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousemove", moveCursor);
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+      <div className="gold-cursor-wrapper">
+        <div id="gold-cursor" />
+        <Box
+          sx={{
+            backgroundColor: "#14161a",
+            color: "white",
+            minHeight: "100vh",
+            cursor: "none",
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/coins/:id" element={<CoinPage />} />
+          </Routes>
+        </Box>
+      </div>
+    </BrowserRouter>
   );
 }
 
